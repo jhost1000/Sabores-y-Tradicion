@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Mesa - Sabores del Inca</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="reservas-styles.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Sabores del Inca</div>
+        <ul>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="../index.html#menu">Menú</a></li>
+            <li><a href="../index.html#nosotros">Nosotros</a></li>
+            <li><a href="../index.html#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <main class="reservas-container">
+        <h1>Reserva tu Mesa</h1>
+        
+        <div class="sala-restaurante">
+            <div class="plano-mesas">
+                <!-- Zona 1: Ventana -->
+                <div class="zona-ventana">
+                    <div class="mesa" data-mesa="1" data-capacidad="4">
+                        <span>Mesa 1</span>
+                        <small>4 personas</small>
+                    </div>
+                    <div class="mesa" data-mesa="2" data-capacidad="2">
+                        <span>Mesa 2</span>
+                        <small>2 personas</small>
+                    </div>
+                </div>
+
+                <!-- Zona 2: Centro -->
+                <div class="zona-centro">
+                    <div class="mesa ocupada" data-mesa="3" data-capacidad="6">
+                        <span>Mesa 3</span>
+                        <small>6 personas</small>
+                    </div>
+                    <div class="mesa" data-mesa="4" data-capacidad="4">
+                        <span>Mesa 4</span>
+                        <small>4 personas</small>
+                    </div>
+                </div>
+
+                <!-- Zona 3: Barra -->
+                <div class="zona-barra">
+                    <div class="mesa" data-mesa="5" data-capacidad="2">
+                        <span>Mesa 5</span>
+                        <small>2 personas</small>
+                    </div>
+                    <div class="mesa" data-mesa="6" data-capacidad="2">
+                        <span>Mesa 6</span>
+                        <small>2 personas</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leyenda">
+                <div class="estado-mesa">
+                    <span class="indicador disponible"></span>
+                    <p>Disponible</p>
+                </div>
+                <div class="estado-mesa">
+                    <span class="indicador ocupada"></span>
+                    <p>Ocupada</p>
+                </div>
+                <div class="estado-mesa">
+                    <span class="indicador seleccionada"></span>
+                    <p>Seleccionada</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="formulario-reserva" id="formularioReserva" style="display: none;">
+            <h2>Detalles de la Reserva</h2>
+            <form id="formReserva">
+                <div class="form-grupo">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                <div class="form-grupo">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-grupo">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" required>
+                </div>
+                <div class="form-grupo">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" id="fecha" required>
+                </div>
+                <div class="form-grupo">
+                    <label for="hora">Hora:</label>
+                    <select id="hora" required>
+                        <option value="">Seleccione hora</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="21:00">21:00</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label for="personas">Número de personas:</label>
+                    <input type="number" id="personas" min="1" max="6" required>
+                </div>
+                <div class="form-acciones">
+                    <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
+                    <button type="button" class="btn-cancelar" onclick="cancelarReserva()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="reservas.js"></script>
+</body>
+</html>

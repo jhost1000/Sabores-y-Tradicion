@@ -1,0 +1,169 @@
+.reservas-container {
+    padding-top: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 20px 40px;
+}
+
+.reservas-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.sala-restaurante {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.plano-mesas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    background: #f5f5f5;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.zona-ventana, .zona-centro, .zona-barra {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mesa {
+    background: #4CAF50;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mesa span {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.mesa small {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.mesa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.mesa.ocupada {
+    background: #f44336;
+    cursor: not-allowed;
+}
+
+.mesa.seleccionada {
+    background: #2196F3;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.leyenda {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.estado-mesa {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.indicador {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.indicador.disponible { background: #4CAF50; }
+.indicador.ocupada { background: #f44336; }
+.indicador.seleccionada { background: #2196F3; }
+
+.formulario-reserva {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.form-grupo {
+    margin-bottom: 1.5rem;
+}
+
+.form-grupo label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.form-grupo input,
+.form-grupo select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-acciones {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.btn-confirmar,
+.btn-cancelar {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-confirmar {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-cancelar {
+    background: #666;
+    color: white;
+}
+
+.btn-confirmar:hover {
+    background: #a01116;
+}
+
+.btn-cancelar:hover {
+    background: #555;
+}
+
+@media (max-width: 768px) {
+    .plano-mesas {
+        grid-template-columns: 1fr;
+    }
+    
+    .leyenda {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,151 @@
+.reservas-main {
+    padding-top: 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.reservas-main h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.restaurant-layout {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.layout-legend {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-item span {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.mesa-disponible {
+    background: #4CAF50;
+}
+
+.mesa-ocupada {
+    background: #f44336;
+}
+
+.mesa-seleccionada {
+    background: #2196F3;
+}
+
+.mesas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.mesa {
+    background: #4CAF50;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mesa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.mesa.ocupada {
+    background: #f44336;
+    cursor: not-allowed;
+}
+
+.mesa.seleccionada {
+    background: #2196F3;
+}
+
+.formulario-reserva {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.btn-reservar, .btn-cancelar {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-reservar {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-cancelar {
+    background: #666;
+    color: white;
+}
+
+.btn-reservar:hover {
+    background: #a01116;
+}
+
+.btn-cancelar:hover {
+    background: #555;
+}
+
+@media (max-width: 768px) {
+    .mesas-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .layout-legend {
+        flex-direction: column;
+        align-items: center;
+    }
+}
