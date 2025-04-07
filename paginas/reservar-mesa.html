@@ -3,122 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reservar Mesa - Sabores del Inca</title>
+    <title>Reservar Mesa - Sabores y Tradiciones</title>
     <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="reservas-styles.css">
+    <link rel="stylesheet" href="../accessibility.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav>
-        <div class="logo">Sabores del Inca</div>
-        <ul>
-            <li><a href="../index.html">Inicio</a></li>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    
+    <nav role="navigation" aria-label="Navegación principal">
+        <div class="logo" role="banner">
+            <a href="../index.html" aria-label="Inicio - Sabores y Tradiciones">Sabores y Tradiciones</a>
+        </div>
+        <ul role="menubar">
+            <li><a href="../index.html#inicio">Inicio</a></li>
             <li><a href="../index.html#menu">Menú</a></li>
             <li><a href="../index.html#nosotros">Nosotros</a></li>
             <li><a href="../index.html#contacto">Contacto</a></li>
+            <li><a href="#" class="reservas-link">Reservar Mesa</a></li>
         </ul>
+        <div class="voice-control">
+            <button id="voiceControlBtn" class="voice-button" aria-label="Activar control por voz">
+                🎤 Control por Voz
+            </button>
+            <div id="voiceStatus" class="voice-status" aria-live="polite"></div>
+        </div>
     </nav>
 
-    <main class="reservas-container">
-        <h1>Reserva tu Mesa</h1>
-        
-        <div class="sala-restaurante">
-            <div class="plano-mesas">
-                <!-- Zona 1: Ventana -->
-                <div class="zona-ventana">
+    <main id="main-content" role="main" class="reservas-page">
+        <section class="reservas-section">
+            <h1>Reserva tu Mesa</h1>
+            
+            <!-- Nueva sección de mesas disponibles -->
+            <div class="mesas-disponibles">
+                <h2>Mesas Disponibles</h2>
+                <div class="mesas-grid">
                     <div class="mesa" data-mesa="1" data-capacidad="4">
-                        <span>Mesa 1</span>
-                        <small>4 personas</small>
+                        <div class="mesa-icon">
+                            <span class="mesa-numero">1</span>
+                            <svg viewBox="0 0 24 24" width="40" height="40">
+                                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <rect x="7" y="8" width="10" height="8" rx="1" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="mesa-info">
+                            <p>Mesa para 4 personas</p>
+                            <span class="mesa-status disponible">Disponible</span>
+                        </div>
                     </div>
-                    <div class="mesa" data-mesa="2" data-capacidad="2">
-                        <span>Mesa 2</span>
-                        <small>2 personas</small>
+                    <div class="mesa" data-mesa="2" data-capacidad="6">
+                        <div class="mesa-icon">
+                            <span class="mesa-numero">2</span>
+                            <svg viewBox="0 0 24 24" width="40" height="40">
+                                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <rect x="7" y="8" width="10" height="8" rx="1" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="mesa-info">
+                            <p>Mesa para 6 personas</p>
+                            <span class="mesa-status disponible">Disponible</span>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Zona 2: Centro -->
-                <div class="zona-centro">
-                    <div class="mesa ocupada" data-mesa="3" data-capacidad="6">
-                        <span>Mesa 3</span>
-                        <small>6 personas</small>
+                    <div class="mesa ocupada" data-mesa="3" data-capacidad="2">
+                        <div class="mesa-icon">
+                            <span class="mesa-numero">3</span>
+                            <svg viewBox="0 0 24 24" width="40" height="40">
+                                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <rect x="7" y="8" width="10" height="8" rx="1" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="mesa-info">
+                            <p>Mesa para 2 personas</p>
+                            <span class="mesa-status">Ocupada</span>
+                        </div>
                     </div>
-                    <div class="mesa" data-mesa="4" data-capacidad="4">
-                        <span>Mesa 4</span>
-                        <small>4 personas</small>
-                    </div>
-                </div>
-
-                <!-- Zona 3: Barra -->
-                <div class="zona-barra">
-                    <div class="mesa" data-mesa="5" data-capacidad="2">
-                        <span>Mesa 5</span>
-                        <small>2 personas</small>
-                    </div>
-                    <div class="mesa" data-mesa="6" data-capacidad="2">
-                        <span>Mesa 6</span>
-                        <small>2 personas</small>
-                    </div>
+                    <!-- Más mesas aquí -->
                 </div>
             </div>
 
-            <div class="leyenda">
-                <div class="estado-mesa">
-                    <span class="indicador disponible"></span>
-                    <p>Disponible</p>
-                </div>
-                <div class="estado-mesa">
-                    <span class="indicador ocupada"></span>
-                    <p>Ocupada</p>
-                </div>
-                <div class="estado-mesa">
-                    <span class="indicador seleccionada"></span>
-                    <p>Seleccionada</p>
-                </div>
+            <div class="reservas-form-container">
+                <form class="reservas-form" role="form" aria-label="Formulario de reserva">
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" id="fecha" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="hora">Hora:</label>
+                        <input type="time" id="hora" required aria-required="true">
+                    </div>
+                    <div class="form-group mesa-info-display">
+                        <label>Capacidad de la mesa:</label>
+                        <span id="capacidad-display"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo:</label>
+                        <input type="text" id="nombre" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="tel" id="telefono" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required aria-required="true">
+                    </div>
+                    <button type="submit" class="cta-button" aria-label="Confirmar reserva">Confirmar Reserva</button>
+                </form>
             </div>
-        </div>
-
-        <div class="formulario-reserva" id="formularioReserva" style="display: none;">
-            <h2>Detalles de la Reserva</h2>
-            <form id="formReserva">
-                <div class="form-grupo">
-                    <label for="nombre">Nombre completo:</label>
-                    <input type="text" id="nombre" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="telefono">Teléfono:</label>
-                    <input type="tel" id="telefono" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" id="fecha" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="hora">Hora:</label>
-                    <select id="hora" required>
-                        <option value="">Seleccione hora</option>
-                        <option value="12:00">12:00</option>
-                        <option value="13:00">13:00</option>
-                        <option value="14:00">14:00</option>
-                        <option value="19:00">19:00</option>
-                        <option value="20:00">20:00</option>
-                        <option value="21:00">21:00</option>
-                    </select>
-                </div>
-                <div class="form-grupo">
-                    <label for="personas">Número de personas:</label>
-                    <input type="number" id="personas" min="1" max="6" required>
-                </div>
-                <div class="form-acciones">
-                    <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
-                    <button type="button" class="btn-cancelar" onclick="cancelarReserva()">Cancelar</button>
-                </div>
-            </form>
-        </div>
+        </section>
     </main>
 
-    <script src="reservas.js"></script>
+    <div class="voice-guide">
+        <div class="voice-guide-content">
+            <h3>Guía de Comandos de Voz</h3>
+            <button class="voice-guide-toggle" aria-label="Mostrar/Ocultar guía de voz">
+                <span>?</span>
+            </button>
+            <div class="guide-sections">
+                <section>
+                    <h4>Comandos de Reserva</h4>
+                    <ul>
+                        <li>"seleccionar fecha" - Para elegir la fecha</li>
+                        <li>"elegir hora" - Para especificar la hora</li>
+                        <li>"número de personas" - Indicar cuántos asistirán</li>
+                        <li>"confirmar reserva" - Enviar el formulario</li>
+                        <li>"volver a inicio" - Regresar a la página principal</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Sabores y Tradiciones - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="../accessibility.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mesas = document.querySelectorAll('.mesa:not(.ocupada)');
+            const formContainer = document.querySelector('.reservas-form-container');
+            const mesaInput = document.createElement('input');
+            const capacidadInput = document.createElement('input');
+            const capacidadDisplay = document.getElementById('capacidad-display');
+            
+            mesaInput.type = 'hidden';
+            mesaInput.name = 'mesa_id';
+            mesaInput.id = 'mesa_id';
+            
+            capacidadInput.type = 'hidden';
+            capacidadInput.name = 'capacidad';
+            capacidadInput.id = 'capacidad';
+            
+            document.querySelector('.reservas-form').append(mesaInput, capacidadInput);
+
+            mesas.forEach(mesa => {
+                mesa.addEventListener('click', function() {
+                    if (!this.classList.contains('ocupada')) {
+                        document.querySelector('.mesa.selected')?.classList.remove('selected');
+                        this.classList.add('selected');
+                        
+                        const mesaId = this.dataset.mesa;
+                        const capacidad = this.dataset.capacidad;
+                        
+                        mesaInput.value = mesaId;
+                        capacidadInput.value = capacidad;
+                        capacidadDisplay.textContent = `${capacidad} personas`;
+                        
+                        formContainer.classList.add('visible');
+                        formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Validar que se haya seleccionado una mesa antes de enviar
+            document.querySelector('.reservas-form').addEventListener('submit', function(e) {
+                if (!mesaInput.value) {
+                    e.preventDefault();
+                    alert('Por favor, seleccione una mesa antes de hacer la reserva.');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

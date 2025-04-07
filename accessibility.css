@@ -1,0 +1,92 @@
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    z-index: 1001;
+    transition: top 0.3s;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+*:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
+.audio-menu {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.audio-button {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.audio-button:hover,
+.audio-button:focus {
+    background-color: #a01116;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+[aria-required="true"] {
+    border-left: 4px solid var(--primary-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+.voice-control {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.voice-button {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.voice-button.listening {
+    background: #28a745;
+    animation: pulse 1.5s infinite;
+}
+
+.voice-status {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

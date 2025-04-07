@@ -6,37 +6,73 @@
     <title>Sabores y Tradiciones - Restaurante Peruano</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="accessibility.css">
 </head>
 <body>
-    <nav>
-        <div class="logo">Sabores y Tradiciones</div>
-        <ul>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    
+    <nav role="navigation" aria-label="Navegación principal">
+        <div class="logo" role="banner">
+            <a href="#inicio" aria-label="Inicio - Sabores y Tradiciones">Sabores y Tradiciones</a>
+        </div>
+        <button aria-expanded="false" aria-label="Menú de navegación" class="nav-toggle" hidden>Menú</button>
+        <ul role="menubar">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#menu">Menú</a></li>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li><a href="paginas/reservar-mesa.html" class="reservas-link">Reservar Mesa</a></li>
         </ul>
+        <div class="voice-control">
+            <button id="voiceControlBtn" class="voice-button" aria-label="Activar control por voz">
+                🎤 Control por Voz
+            </button>
+            <div id="voiceStatus" class="voice-status" aria-live="polite"></div>
+        </div>
     </nav>
 
-    <header class="hero">
+    <header class="hero" role="banner">
+        <div class="hero-overlay"></div>
+        <div class="background-slider">
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1535400255456-984241443b29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"></div>
+            <div class="slide" style="background-image: url('https://img.freepik.com/foto-gratis/plato-ternera-verduras-parrilla-listo-comer-generado-ia_188544-39175.jpg?t=st=1743513173~exp=1743516773~hmac=e506dc285fad5dc44ba6635177a8bfe6729e4b4ee9ec0d90186ed7a9460a3442&w=1380')"></div>
+        </div>
         <div class="hero-content">
-            <h1>Sabores y Tradiciones</h1>
-            <p>Un viaje gastronómico por el Perú</p>
-            <a href="#menu" class="cta-button">Ver Menú</a>
+            <div class="hero-text-container">
+                <h1 class="animate-title" tabindex="0">
+                    <span class="line">Sabores y</span>
+                    <span class="line">Tradiciones</span>
+                </h1>
+                <p class="animate-subtitle" tabindex="0">Un viaje gastronómico por el Perú</p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="cta-button primary" role="button" aria-label="Ver nuestro menú de platillos">
+                        <span class="button-content">Ver Menú</span>
+                        <span class="button-icon">→</span>
+                    </a>
+                    <a href="#reservar" class="cta-button secondary" role="button">
+                        <span class="button-content">Reservar Mesa</span>
+                        <span class="button-icon">✓</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span class="scroll-text">Descubre más</span>
+            <div class="scroll-icon"></div>
         </div>
     </header>
 
-    <main>
-        <section id="menu">
-            <h2>Nuestra Carta</h2>
+    <main id="main-content" role="main">
+        <section id="menu" aria-labelledby="menu-heading">
+            <h2 id="menu-heading">Nuestra Carta</h2>
             <div class="menu-items">
-                <div class="menu-item">
-                    <img src="https://media.a24.com/p/5534bfffca6ddf35246308865bdcd189/adjuntos/296/imagenes/009/138/0009138416/1200x675/smart/ceviche-receta-casera-un-manjar-peruano-tu-mesa.png" alt="Ceviche">
+                <div class="menu-item" role="article" tabindex="0">
+                    <img src="https://media.a24.com/p/5534bfffca6ddf35246308865bdcd189/adjuntos/296/imagenes/009/138/0009138416/1200x675/smart/ceviche-receta-casera-un-manjar-peruano-tu-mesa.png" alt="Ceviche clásico peruano servido con camote, choclo y hojas de cilantro" aria-describedby="ceviche-desc">
                     <div class="menu-content">
                         <h3>Ceviche Clásico</h3>
-                        <p>Pescado fresco marinado en limón con ají y cilantro</p>
-                        <span class="price">S/. 35.00</span>
+                        <p id="ceviche-desc">Pescado fresco marinado en limón con ají y cilantro. Servido con camote y choclo</p>
+                        <span class="price" aria-label="Precio: 35 soles">S/. 35.00</span>
                     </div>
                 </div>
                 <div class="menu-item">
@@ -55,40 +91,259 @@
                         <span class="price">S/. 38.00</span>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="nosotros" class="about-section">
-            <div class="about-content">
-                <h2>Nuestra Historia</h2>
-                <p>Desde 2010 compartiendo la rica tradición culinaria peruana, fusionando sabores ancestrales con técnicas modernas.</p>
-            </div>
-            <div class="about-image">
-                <img src="/resources/nosotros.jpg" alt="Nuestro restaurante">
-            </div>
-        </section>
-
-        <section id="contacto" class="contact-section">
-            <h2>Reserva tu mesa</h2>
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Información</h3>
-                    <p>📞 +51 123 456 789</p>
-                    <p>📍 Av. Principal 123, Lima</p>
-                    <p>⏰ Lun-Dom: 12:00 - 22:00</p>
+                <div class="menu-item">
+                    <img src="https://www.paulinacocina.net/wp-content/uploads/2024/03/chupe-de-camaron-Paulina-Cocina-Recetas-Cocina-Recetas-1-1722430347-1200x675.jpg" alt="Chupe de Camarones">
+                    <div class="menu-content">
+                        <h3>Chupe de Camarones</h3>
+                        <p>Sopa cremosa con camarones, maíz, queso y huevo</p>
+                        <span class="price">S/. 45.00</span>
+                    </div>
                 </div>
-                <form class="contact-form">
-                    <input type="text" placeholder="Nombre">
-                    <input type="email" placeholder="Email">
-                    <input type="tel" placeholder="Teléfono">
-                    <button type="submit" class="cta-button">Reservar</button>
-                </form>
+                <div class="menu-item">
+                    <img src="https://www.recetasnestle.com.pe/sites/default/files/srh_recipes/983b3beba61893c89be5456219d45451.jpg" alt="Arroz con Mariscos">
+                    <div class="menu-content">
+                        <h3>Arroz con Mariscos</h3>
+                        <p>Arroz al ají panca con variedad de mariscos frescos</p>
+                        <span class="price">S/. 48.00</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://www.paulinacocina.net/wp-content/uploads/2024/04/rocoto-relleno-con-pastel-de-papa-Paulina-Cocina-Recetas-Cocina-Recetas-1722430349-1200x900.jpg" alt="Rocoto Relleno">
+                    <div class="menu-content">
+                        <h3>Rocoto Relleno</h3>
+                        <p>Rocoto relleno de carne, pasas y queso gratinado</p>
+                        <span class="price">S/. 36.00</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://www.infobae.com/resizer/v2/PKTJOMTL4NEKZPOSQZVJ5TNYGE.jpg?auth=2cee519684dace3260c9f22518a66b3babf73e5bedfa3642a32f0e70c51a4b33&smart=true&width=1200&height=900&quality=85" alt="Causa Rellena">
+                    <div class="menu-content">
+                        <h3>Causa Rellena</h3>
+                        <p>Papa amarilla prensada rellena de pollo o atún</p>
+                        <span class="price">S/. 32.00</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy6fsllnHMaw7dYA0F75SWpLJGDegDcEPKbw&s" alt="Anticuchos">
+                    <div class="menu-content">
+                        <h3>Anticuchos</h3>
+                        <p>Brochetas de corazón marinadas en ají panca</p>
+                        <span class="price">S/. 28.00</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcZONGC-lvqht7Q6M6A7Me_aBCEwxItIlH0Q&s" alt="Tacu Tacu">
+                    <div class="menu-content">
+                        <h3>Tacu Tacu</h3>
+                        <p>Tortilla de arroz y frejoles con bistec a lo pobre</p>
+                        <span class="price">S/. 40.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="audio-menu">
+                <button class="audio-button" aria-label="Escuchar descripción del menú">
+                    Escuchar Menú 🔊
+                </button>
+            </div>
+        </section>
+
+        
+
+        <section id="contacto" class="promotions-section" aria-labelledby="promotions-heading">
+            <h2 id="promotions-heading">Promociones Especiales</h2>
+            <div class="promotions-container">
+                <div class="promo-card delivery-promo" role="article">
+                    <div class="promo-icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48">
+                            <path fill="currentColor" d="M19.5,14h-1.5v-2.5c0-0.3-0.2-0.5-0.5-0.5h-3V6.5C14.5,6.2,14.3,6,14,6H3.5C3.2,6,3,6.2,3,6.5v9C3,15.8,3.2,16,3.5,16h0.7 c0.3,0.8,1.1,1.5,2,1.5s1.7-0.7,2-1.5h7.6c0.3,0.8,1.1,1.5,2,1.5s1.7-0.7,2-1.5h0.7c0.3,0,0.5-0.2,0.5-0.5v-1 C21,14.2,20.3,14,19.5,14z M6.3,16.5c-0.4,0-0.8-0.3-0.8-0.8s0.3-0.8,0.8-0.8s0.8,0.3,0.8,0.8S6.7,16.5,6.3,16.5z M17.8,16.5c-0.4,0-0.8-0.3-0.8-0.8s0.3-0.8,0.8-0.8s0.8,0.3,0.8,0.8S18.2,16.5,17.8,16.5z"/>
+                        </svg>
+                    </div>
+                    <h3>Delivery Gratis</h3>
+                    <p>En pedidos mayores a S/. 100</p>
+                    <div class="promo-details">
+                        <span class="time-estimate">30-45 min</span>
+                        <button class="promo-button">Ordenar Ahora</button>
+                    </div>
+                </div>
+
+                <div class="promo-card combo-promo" role="article">
+                    <div class="promo-icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48">
+                            <path fill="currentColor" d="M8.1,13.34L3.91,9.16C2.35,7.59,2.35,5.06,3.91,3.5L10.93,10.5L8.1,13.34M14.88,11.53L13.41,13L20.29,19.88L18.88,21.29L12,14.41L5.12,21.29L3.71,19.88L13.47,10.12C12.76,8.59,13.26,6.44,14.85,4.85C16.76,2.93,19.5,2.57,20.96,4.03C22.43,5.5,22.07,8.24,20.15,10.15C18.56,11.74,16.41,12.24,14.88,11.53Z"/>
+                        </svg>
+                    </div>
+                    <h3>Combo Familiar</h3>
+                    <p>4 platos principales + 2 entradas</p>
+                    <div class="promo-tag">Ahorra 20%</div>
+                    <div class="promo-details">
+                        <span class="price">S/. 159.90</span>
+                        <button class="promo-button">Ver Combo</button>
+                    </div>
+                </div>
+
+                <div class="promo-card express-promo" role="article">
+                    <div class="promo-icon">
+                        <svg viewBox="0 0 24 24" width="48" height="48">
+                            <path fill="currentColor" d="M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z"/>
+                        </svg>
+                    </div>
+                    <h3>Express Lunch</h3>
+                    <p>Tu almuerzo en 15 minutos o es gratis</p>
+                    <div class="promo-tag">Lun-Vie 12-3pm</div>
+                    <div class="promo-details">
+                        <span class="time-estimate">15 min</span>
+                        <button class="promo-button">Ver Menú</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="delivery-info">
+                <h3>¿Cómo funciona nuestro delivery?</h3>
+                <div class="delivery-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Elige tus platos favoritos</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Realiza tu pedido online</p>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>¡Disfruta en casa!</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2023 Sabores y Tradiciones - Todos los derechos reservados</p>
+        <p>&copy; 2025 Sabores y Tradiciones - Todos los derechos reservados</p>
     </footer>
+
+    <div class="voice-guide">
+        <div class="voice-guide-content">
+            <h3>Guía de Comandos de Voz</h3>
+            <button class="voice-guide-toggle" aria-label="Mostrar/Ocultar guía de voz">
+                <span>?</span>
+            </button>
+            <div class="guide-sections">
+                <section>
+                    <h4>Activación</h4>
+                    <p>Di "comando de voz" para empezar</p>
+                </section>
+                <section>
+                    <h4>Comandos Básicos</h4>
+                    <ul>
+                        <li>"ver menú" - Muestra los platos disponibles</li>
+                        <li>"información" - Datos de contacto</li>
+                        <li>"reservar mesa" - Hacer una reservación</li>
+                    </ul>
+                </section>
+                <section>
+                    <h4>Navegación</h4>
+                    <ul>
+                        <li>"inicio" - Volver al principio</li>
+                        <li>"sobre ustedes" - Historia del restaurante</li>
+                    </ul>
+                </section>
+                <section>
+                    <h4>Control</h4>
+                    <ul>
+                        <li>"detener" - Parar el asistente</li>
+                        <li>"silencio" - Detener la voz</li>
+                    </ul>
+                </section>
+                <section>
+                    <h4>Consejos</h4>
+                    <ul>
+                        <li>Habla claro y cerca del micrófono</li>
+                        <li>Usa un ambiente sin ruido</li>
+                        <li>Espera la señal de "Escuchando..."</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modales para las promociones -->
+    <div id="deliveryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Tu pedido a domicilio</h3>
+            <div id="cart-items">
+                <!-- Los items del carrito se cargarán aquí -->
+            </div>
+            <div class="cart-summary">
+                <p>Total: <span id="cart-total">S/. 0.00</span></p>
+                <p class="delivery-status">Delivery: <span id="delivery-cost">S/. 10.00</span></p>
+                <p class="delivery-message"></p>
+            </div>
+            <div class="menu-selection">
+                <h4>Agregar platos:</h4>
+                <div class="menu-grid">
+                    <!-- Los platos se cargarán dinámicamente -->
+                </div>
+            </div>
+            <button class="checkout-button" disabled>Proceder al pago</button>
+        </div>
+    </div>
+
+    <div id="comboModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Combo Familiar Especial</h3>
+            <div class="combo-builder">
+                <div class="combo-section">
+                    <h4>Platos Principales (elige 4)</h4>
+                    <div class="dish-selection main-dishes"></div>
+                </div>
+                <div class="combo-section">
+                    <h4>Entradas (elige 2)</h4>
+                    <div class="dish-selection starters"></div>
+                </div>
+                <div class="combo-summary">
+                    <p>Precio regular: <span class="original-price">S/. 199.90</span></p>
+                    <p>Descuento: <span class="discount">20%</span></p>
+                    <p class="final-price">Precio final: <span>S/. 159.90</span></p>
+                </div>
+            </div>
+            <button class="order-combo-button">Ordenar Combo</button>
+        </div>
+    </div>
+
+    <div id="expressModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Express Lunch</h3>
+            <div class="express-timer">
+                <p>Tiempo restante para entrega:</p>
+                <div class="timer">15:00</div>
+            </div>
+            <div class="express-menu">
+                <div class="menu-category">
+                    <h4>Menú Express del Día</h4>
+                    <div class="express-items"></div>
+                </div>
+            </div>
+            <button class="order-express-button">Ordenar Express</button>
+        </div>
+    </div>
+
+    <div id="orderSuccessModal" class="modal">
+        <div class="modal-content success">
+            <span class="close-modal">&times;</span>
+            <div class="success-animation">✓</div>
+            <h3>¡Pedido Confirmado!</h3>
+            <div class="order-details"></div>
+            <button class="track-order-button">Seguir Pedido</button>
+        </div>
+    </div>
+
+    <script src="js/modals.js"></script>
+    <script src="accessibility.js"></script>
 </body>
 </html>
+
