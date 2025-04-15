@@ -1,11 +1,235 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Configuración inicial
+    // Estado global del carrito
     const cart = {
         items: [],
-        total: 0
+        total: 0,
+        addItem(item) {
+            const existingItem = this.items.find(i => i.id === item.id);
+            if (existingItem) {
+                existingItem.quantity++;
+                existingItem.total = existingItem.quantity * existingItem.price;
+            } else {
+                this.items.push({
+                    ...item,
+                    quantity: 1,
+                    total: item.price
+                });
+            }
+            this.updateTotal();
+            this.saveToLocalStorage();
+            this.updateCartCount();
+        },
+        removeItem(itemId) {
+            this.items = this.items.filter(item => item.id !== itemId);
+            this.updateTotal();
+            this.saveToLocalStorage();
+            this.updateCartCount();
+        },
+        updateQuantity(itemId, quantity) {
+            const item = this.items.find(i => i.id === itemId);
+            if (item) {
+                item.quantity = quantity;
+                item.total = item.quantity * item.price;
+                this.updateTotal();
+                this.saveToLocalStorage();
+                this.updateCartCount();
+            }
+        },
+        updateTotal() {
+            this.total = this.items.reduce((sum, item) => sum + item.total, 0);
+        },
+        clear() {
+            this.items = [];
+            this.total = 0;
+            this.saveToLocalStorage();
+            this.updateCartCount();
+        },
+        saveToLocalStorage() {
+            localStorage.setItem('cart', JSON.stringify({
+                items: this.items,
+                total: this.total
+            }));
+        },
+        loadFromLocalStorage() {
+            const savedCart = JSON.parse(localStorage.getItem('cart'));
+            if (savedCart) {
+                this.items = savedCart.items;
+                this.total = savedCart.total;
+                this.updateCartCount();
+            }
+        },
+        updateCartCount() {
+            const count = this.items.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelector('.cart-count').textContent = count;
+        }
     };
 
-    // Menú disponible
+    // Cargar carrito guardado
+    cart.loadFromLocalStorage();
+
+    // Añadir botones de "Agregar al carrito" a cada item del menú
+    document.querySelectorAll('.menu-item').forEach(item => {
+        const name = item.querySelector('h3').textContent;
+        const price = parseFloat(item.querySelector('.price').textContent.replace('S/. ', ''));
+        const id = item.dataset.id || Math.random().toString(36).substr(2, 9);
+        
+        const addButton = document.createElement('button');
+        addButton.className = 'add-to-cart';
+        addButton.textContent = 'Agregar al Carrito';
+        addButton.onclick = () => {
+            cart.addItem({ id, name, price });
+            showAddedToCartAnimation(addButton);
+        };
+        
+        item.appendChild(addButton);
+    });
+
+    // Event listener para botón del carrito
+    document.getElementById('cartButton').addEventListener('click', () => {
+        openNormalCartModal();
+    });
+
+    function showAddedToCartAnimation(button) {
+        button.textContent = '¡Agregado!';
+        button.style.background = '#28a745';
+        setTimeout(() => {
+            button.textContent = 'Agregar al Carrito';
+            button.style.background = 'var(--primary-color)';
+        }, 1000);
+    }
+
+    function openNormalCartModal() {
+        const modal = document.getElementById('normalCartModal');
+        updateNormalCartDisplay();
+        
+        // Agregar listener específico para el botón de cerrar
+        const closeButton = modal.querySelector('.close-modal');
+        closeButton.onclick = () => {
+            if (cart.items.length > 0) {
+                if (confirm('¿Estás seguro de que deseas cancelar tu pedido?')) {
+                    cart.clear();
+                    updateNormalCartDisplay();
+                    modal.style.display = 'none';
+                }
+            } else {
+                modal.style.display = 'none';
+            }
+        };
+        
+        modal.style.display = 'block';
+    }
+
+    function updateNormalCartDisplay() {
+        const cartItems = document.getElementById('normal-cart-items');
+        const subtotal = document.getElementById('normal-cart-subtotal');
+        const tax = document.getElementById('normal-cart-tax');
+        const total = document.getElementById('normal-cart-total');
+        const checkoutButton = document.querySelector('#normalCartModal .checkout-button');
+        
+        cartItems.innerHTML = cart.items.map(item => `
+            <div class="cart-item" data-id="${item.id}">
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p>S/. ${item.price.toFixed(2)} c/u</p>
+                </div>
+                <div class="cart-item-controls">
+                    <button class="quantity-btn minus">-</button>
+                    <span class="quantity">${item.quantity}</span>
+                    <button class="quantity-btn plus">+</button>
+                    <button class="remove-item">×</button>
+                </div>
+                <div class="item-total">
+                    S/. ${item.total.toFixed(2)}
+                </div>
+            </div>
+        `).join('');
+
+        const subtotalAmount = cart.total;
+        const taxAmount = subtotalAmount * 0.18;
+        const totalAmount = subtotalAmount + taxAmount;
+
+        subtotal.textContent = `S/. ${subtotalAmount.toFixed(2)}`;
+        tax.textContent = `S/. ${taxAmount.toFixed(2)}`;
+        total.textContent = `S/. ${totalAmount.toFixed(2)}`;
+
+        // Habilitar/deshabilitar botón de checkout basado en items del carrito
+        checkoutButton.disabled = cart.items.length === 0;
+
+        // Modificar esta parte para evitar el doble modal
+        checkoutButton.onclick = () => {
+            if (cart.items.length > 0) {
+                const orderDetails = {
+                    type: 'Normal',
+                    items: cart.items,
+                    subtotal: subtotalAmount,
+                    tax: taxAmount,
+                    total: totalAmount
+                };
+                document.getElementById('normalCartModal').style.display = 'none';
+                showPaymentModal(orderDetails);
+            }
+        };
+
+        // Remover cualquier otro event listener existente
+        checkoutButton.removeEventListener('click', function() {});
+
+        // Remover todos los event listeners existentes
+        const newCheckoutButton = checkoutButton.cloneNode(true);
+        checkoutButton.parentNode.replaceChild(newCheckoutButton, checkoutButton);
+        
+        // Agregar un único event listener
+        newCheckoutButton.onclick = () => {
+            if (cart.items.length > 0) {
+                const orderDetails = {
+                    type: 'Normal',
+                    items: cart.items,
+                    subtotal: subtotalAmount,
+                    tax: taxAmount,
+                    total: totalAmount
+                };
+                // Cerrar el modal del carrito antes de mostrar el de pago
+                document.getElementById('normalCartModal').style.display = 'none';
+                showPaymentModal(orderDetails);
+            }
+        };
+    }
+
+    // Event listeners para el carrito normal
+    document.getElementById('normalCartModal').addEventListener('click', function(e) {
+        if (e.target.classList.contains('quantity-btn')) {
+            const itemId = e.target.closest('.cart-item').dataset.id;
+            const item = cart.items.find(i => i.id === itemId);
+            let newQuantity = item.quantity;
+
+            if (e.target.classList.contains('plus')) {
+                newQuantity++;
+            } else if (e.target.classList.contains('minus')) {
+                newQuantity = Math.max(0, newQuantity - 1);
+            }
+
+            if (newQuantity === 0) {
+                cart.removeItem(itemId);
+            } else {
+                cart.updateQuantity(itemId, newQuantity);
+            }
+            updateNormalCartDisplay();
+        }
+
+        if (e.target.classList.contains('remove-item')) {
+            const itemId = e.target.closest('.cart-item').dataset.id;
+            cart.removeItem(itemId);
+            updateNormalCartDisplay();
+        }
+    });
+
+    document.querySelector('.clear-cart').addEventListener('click', () => {
+        if (confirm('¿Estás seguro de que deseas vaciar el carrito?')) {
+            cart.clear();
+            updateNormalCartDisplay();
+        }
+    });
+
+    // Configuración inicial
     const menuItems = [
         { id: 1, name: 'Ceviche Clásico', price: 35.00, type: 'main', 
           description: 'Pescado fresco marinado en limón con ají y cilantro. Servido con camote y choclo' },
@@ -53,6 +277,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    
 
     // Delivery Modal
     function openDeliveryModal() {
@@ -102,6 +328,22 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 modal.style.display = 'none';
             }
+        });
+
+        // Event listener para ordenar
+        const checkoutButton = modal.querySelector('.checkout-button');
+        checkoutButton.addEventListener('click', () => {
+            const deliveryCost = cart.total >= 100 ? 0 : 10;
+            const orderDetails = {
+                type: 'Delivery',
+                items: cart.items,
+                subtotal: cart.total,
+                delivery: deliveryCost,
+                total: cart.total + deliveryCost,
+                delivery_status: cart.total >= 100 ? 'Gratis' : 'S/. 10.00'
+            };
+            modal.style.display = 'none';
+            showPaymentModal(orderDetails);
         });
 
         setupQuantityControls(menuGrid);
@@ -209,7 +451,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="modal-content combo-modal">
                 <div class="modal-header">
                     <h3 class="modal-title">Arma tu Combo Familiar</h3>
-                    <button class="close-modal">&times;</button>
                 </div>
                 <div class="combo-builder">
                     <div class="combo-section">
@@ -248,18 +489,41 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p>Descuento: <span class="discount">20%</span></p>
                             <p class="final-price">Precio final: <span>S/. 159.90</span></p>
                         </div>
-                        <button class="order-combo-button" disabled>
-                            <span class="button-content">Ordenar Combo</span>
-                            <span class="button-icon">→</span>
-                        </button>
+                        <div class="combo-buttons">
+                            <button class="cancel-combo-button">Cancelar</button>
+                            <button class="order-combo-button" disabled>
+                                <span class="button-content">Ordenar Combo</span>
+                                <span class="button-icon">→</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         `;
 
+        // Agregar event listener para el botón de cancelar
+        modal.querySelector('.cancel-combo-button').addEventListener('click', () => {
+            if (document.querySelectorAll('.main-dishes input:checked, .starters input:checked').length > 0) {
+                if (confirm('¿Estás seguro de que deseas cancelar tu selección?')) {
+                    modal.style.display = 'none';
+                    // Desmarcar todos los checkboxes
+                    modal.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                    // Resetear contadores
+                    document.querySelectorAll('.selection-count').forEach(counter => {
+                        counter.textContent = '(0/4)';
+                    });
+                    updateComboButton();
+                }
+            } else {
+                modal.style.display = 'none';
+            }
+        });
+
         modal.style.display = 'block';
         setupComboSelections();
-
+        
         // Add click handler for combo order button
         modal.querySelector('.order-combo-button').addEventListener('click', function() {
             const selectedDishes = {
@@ -294,26 +558,44 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function setupComboSelections() {
-        document.querySelectorAll('.dish-selection').forEach(section => {
-            section.addEventListener('change', function(e) {
-                const checked = section.querySelectorAll('input:checked').length;
-                const limit = e.target.closest('.dish-option').dataset.limit;
+        const mainDishesSection = document.querySelector('.main-dishes');
+        const startersSection = document.querySelector('.starters');
+        const mainSelectionCount = document.querySelector('.main-dishes').closest('.combo-section').querySelector('.selection-count');
+        const starterSelectionCount = document.querySelector('.starters').closest('.combo-section').querySelector('.selection-count');
 
-                if (checked > limit) {
-                    e.target.checked = false;
-                }
+        mainDishesSection.addEventListener('change', function(e) {
+            const checked = mainDishesSection.querySelectorAll('input:checked').length;
+            mainSelectionCount.textContent = `(${checked}/4)`;
+            if (checked > 4) {
+                e.target.checked = false;
+                mainSelectionCount.textContent = `(${checked - 1}/4)`;
+            }
+            updateComboButton();
+        });
 
-                updateComboButton();
-            });
+        startersSection.addEventListener('change', function(e) {
+            const checked = startersSection.querySelectorAll('input:checked').length;
+            starterSelectionCount.textContent = `(${checked}/2)`;
+            if (checked > 2) {
+                e.target.checked = false;
+                starterSelectionCount.textContent = `(${checked - 1}/2)`;
+            }
+            updateComboButton();
         });
     }
 
     function updateComboButton() {
-        const mainDishesSelected = document.querySelectorAll('.main-dishes input:checked').length === 4;
-        const startersSelected = document.querySelectorAll('.starters input:checked').length === 2;
+        const mainDishesSelected = document.querySelectorAll('.main-dishes input:checked').length;
+        const startersSelected = document.querySelectorAll('.starters input:checked').length;
         const orderButton = document.querySelector('.order-combo-button');
 
-        orderButton.disabled = !(mainDishesSelected && startersSelected);
+        orderButton.disabled = !(mainDishesSelected === 4 && startersSelected === 2);
+        
+        if (!orderButton.disabled) {
+            orderButton.classList.add('active');
+        } else {
+            orderButton.classList.remove('active');
+        }
     }
 
     // Express Modal
@@ -410,6 +692,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function showPaymentModal(orderDetails) {
+        // Remover cualquier modal de pago existente
+        const existingModal = document.querySelector('.payment-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
         const modal = document.createElement('div');
         modal.className = 'modal payment-modal';
         modal.innerHTML = `
@@ -425,8 +713,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="payment-details">
                     <div class="payment-amount">
-                        S/. ${orderDetails.total.toFixed(2)}
+                        Total a pagar: S/. ${orderDetails.total.toFixed(2)}
                     </div>
+                    <p class="delivery-status">${orderDetails.delivery_status || ''}</p>
                     <p>Enviar a: Sabores y Tradiciones</p>
                     <div class="payment-steps">
                         <div class="payment-step">
@@ -447,9 +736,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p>Tiempo restante para pagar:</p>
                     <div class="payment-timer">05:00</div>
                 </div>
-                <div class="confirmation-buttons">
-                    <button class="confirm-button">Confirmar Pago</button>
-                    <button class="cancel-button">Cancelar</button>
+                <div class="payment-buttons">
+                    <button class="confirm-payment">
+                        <span class="button-icon">✓</span>
+                        <span class="button-text">Confirmar Pago</span>
+                    </button>
+                    <button class="cancel-payment">
+                        <span class="button-icon">✕</span>
+                        <span class="button-text">Cancelar</span>
+                    </button>
                 </div>
             </div>
         `;
@@ -473,33 +768,36 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 1000);
 
-        // Event listeners
-        modal.querySelector('.close-modal').addEventListener('click', () => {
+        // Mejorar los event listeners de los botones
+        const confirmButton = modal.querySelector('.confirm-payment');
+        const cancelButton = modal.querySelector('.cancel-payment');
+        const closeButton = modal.querySelector('.close-modal');
+
+        confirmButton.addEventListener('click', () => {
             clearInterval(timer);
             modal.remove();
+            showOrderSuccess(orderDetails);
+            cart.clear(); // Limpiar carrito después de confirmar
         });
 
-        modal.querySelector('.confirm-button').addEventListener('click', () => {
-            clearInterval(timer);
-            modal.remove();
-            showOrderSuccess({
-                ...orderDetails,
-                paymentStatus: 'completed'
-            });
-        });
-
-        modal.querySelector('.cancel-button').addEventListener('click', () => {
-            clearInterval(timer);
-            modal.remove();
-        });
-
-        // Close on outside click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
+        const handleCancel = () => {
+            if (confirm('¿Está seguro que desea cancelar el pago?')) {
                 clearInterval(timer);
                 modal.remove();
+                // Mostrar nuevamente el modal del carrito
+                document.getElementById('normalCartModal').style.display = 'block';
             }
-        });
+        };
+
+        cancelButton.onclick = handleCancel;
+        closeButton.onclick = handleCancel;
+
+        // Cerrar al hacer clic fuera del modal
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                handleCancel();
+            }
+        };
     }
 
     // Modificar las funciones existentes para incluir el pago
@@ -518,4 +816,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     updateCheckoutButton();
+
+    // Eliminar o comentar la línea duplicada que podría estar causando conflicto
+    // document.querySelector('.checkout-button').addEventListener('click', function() {
+    //     ...
+    // });
+
+    document.querySelector('.checkout-button').addEventListener('click', function() {
+        if (cart.items.length > 0) {
+            const orderDetails = {
+                type: 'Normal',
+                items: cart.items,
+                total: cart.total,
+                tax: cart.total * 0.18
+            };
+            document.getElementById('normalCartModal').style.display = 'none';
+            showPaymentModal(orderDetails);
+        }
+    });
 });

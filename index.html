@@ -22,6 +22,12 @@
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#contacto">Contacto</a></li>
             <li><a href="paginas/reservar-mesa.html" class="reservas-link">Reservar Mesa</a></li>
+            <li>
+                <button id="cartButton" class="cart-button">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count">0</span>
+                </button>
+            </li>
         </ul>
         <div class="voice-control">
             <button id="voiceControlBtn" class="voice-button" aria-label="Activar control por voz">
@@ -147,7 +153,44 @@
             </div>
         </section>
 
-        
+        <section id="nosotros" class="about-section" aria-labelledby="about-heading">
+            <div class="about-content">
+                <h2 id="about-heading">Nuestra Historia</h2>
+                <p>Desde 2010, Sabores y Tradiciones ha sido el hogar de la auténtica cocina peruana en Lima. Nacimos con la visión de preservar y compartir las recetas tradicionales que han pasado de generación en generación.</p>
+                
+                <p>Nuestro chef ejecutivo, Carlos Ramírez, junto a su equipo de expertos cocineros, combina técnicas culinarias ancestrales con presentaciones contemporáneas, creando una experiencia gastronómica única que honra nuestras raíces.</p>
+                
+                <div class="about-values">
+                    <h3>Nuestros Valores</h3>
+                    <ul>
+                        <li><strong>Autenticidad:</strong> Mantenemos vivas las recetas tradicionales</li>
+                        <li><strong>Calidad:</strong> Seleccionamos los mejores ingredientes locales</li>
+                        <li><strong>Innovación:</strong> Reinventamos la tradición con toques modernos</li>
+                        <li><strong>Servicio:</strong> Creamos experiencias memorables para nuestros clientes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="about-image-gallery">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" alt="Interior del restaurante" class="main-image">
+                <div class="image-grid">
+                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400" alt="Nuestros platos especiales">
+                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=400" alt="Nuestro equipo de cocina">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400" alt="Experiencia culinaria">
+                </div>
+            </div>
+        </section>
+
+        <div class="section-separator">
+            <div class="separator-line left"></div>
+            <div class="separator-icon">✦</div>
+            <div class="separator-line right"></div>
+            <div class="separator-ornaments">
+                <span class="ornament left">❦</span>
+                <span class="ornament center">❧</span>
+                <span class="ornament right">❦</span>
+            </div>
+        </div>
 
         <section id="contacto" class="promotions-section" aria-labelledby="promotions-heading">
             <h2 id="promotions-heading">Promociones Especiales</h2>
@@ -217,6 +260,79 @@
                 </div>
             </div>
         </section>
+
+        <section id="contacto" class="contact-section" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">Contáctanos</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="info-icon">📍</div>
+                        <h3>Ubicación</h3>
+                        <p>Av. Arequipa 1234</p>
+                        <p>Lima, Perú</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📞</div>
+                        <h3>Teléfonos</h3>
+                        <p>+51 987 654 321</p>
+                        <p>01 234 5678</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">📧</div>
+                        <h3>Email</h3>
+                        <p>info@saboresytradiciones.com</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🕒</div>
+                        <h3>Horario</h3>
+                        <p>Lunes a Domingo</p>
+                        <p>12:00 - 23:00</p>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <h3>Envíanos un mensaje</h3>
+                        <div class="form-group">
+                            <input type="text" id="nombre" name="nombre" required placeholder="Nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required placeholder="Correo electrónico">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="telefono" name="telefono" required placeholder="Teléfono">
+                        </div>
+                        <div class="form-group">
+                            <select id="asunto" name="asunto" required>
+                                <option value="">Seleccione un asunto</option>
+                                <option value="reserva">Reserva</option>
+                                <option value="consulta">Consulta</option>
+                                <option value="sugerencia">Sugerencia</option>
+                                <option value="reclamo">Reclamo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="mensaje" name="mensaje" required placeholder="Tu mensaje" rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">
+                            <span class="button-content">Enviar Mensaje</span>
+                            <span class="button-icon">→</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.964557721279!2d-77.03404684928536!3d-12.046654791464944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8c6a1f25c99%3A0x8c9c3a2a70a3b620!2sAv.%20Arequipa%2C%20Lima!5e0!3m2!1ses-419!2spe!4v1647904898000!5m2!1ses-419!2spe"
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+
     </main>
 
     <footer>
@@ -287,7 +403,7 @@
                     <!-- Los platos se cargarán dinámicamente -->
                 </div>
             </div>
-            <button class="checkout-button" disabled>Proceder al pago</button>
+            
         </div>
     </div>
 
@@ -339,6 +455,31 @@
             <h3>¡Pedido Confirmado!</h3>
             <div class="order-details"></div>
             <button class="track-order-button">Seguir Pedido</button>
+        </div>
+    </div>
+
+    <!-- Añadir nuevo modal para carrito normal -->
+    <div id="normalCartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tu Carrito</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="normal-cart-items" class="cart-items">
+                <!-- Items del carrito se cargarán aquí -->
+            </div>
+            <div class="cart-summary">
+                <p>Subtotal: <span id="normal-cart-subtotal">S/. 0.00</span></p>
+                <p>IGV (18%): <span id="normal-cart-tax">S/. 0.00</span></p>
+                <p class="total">Total: <span id="normal-cart-total">S/. 0.00</span></p>
+            </div>
+            <div class="cart-actions">
+                <button class="clear-cart">Limpiar Carrito</button>
+                <button class="checkout-button" disabled>
+                    <span class="button-content">Proceder al Pago</span>
+                    <span class="button-icon">→</span>
+                </button>
+            </div>
         </div>
     </div>
 
