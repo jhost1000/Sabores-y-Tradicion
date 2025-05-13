@@ -1906,10 +1906,6 @@ footer {
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 15px rgba(200, 22, 29, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
 }
 
 #deliveryModal .checkout-button:hover:not(:disabled) {
@@ -1988,4 +1984,95 @@ footer {
 
 .payment-buttons .button-text {
     font-size: 1rem;
+}
+
+
+/* Accessibility Modal */
+.accessibility-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.accessibility-modal .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 500px;
+    text-align: center;
+}
+
+.accessibility-modal .modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.accessibility-modal button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.accessibility-modal button:hover {
+    transform: scale(1.05);
+}
+
+/* Accessibility Mode Styles */
+.accessibility-mode :focus {
+    outline: 3px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+.accessibility-mode .current-section {
+    border: 3px solid #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.section-highlight {
+    position: relative;
+    outline: 3px solid #FFD700;
+    outline-offset: 4px;
+    border-radius: 4px;
+    transition: outline 0.3s ease;
+    z-index: 10;
+}
+
+.section-highlight::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 8px;
+    z-index: -1;
+}
+
+.accessibility-mode .section-highlight {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
 }
